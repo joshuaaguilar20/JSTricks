@@ -15,3 +15,34 @@ function.`
 // later
     console.log( fooThunk() );
 //
+As you can see,
+// 7 only expects a fooThunk(..)
+  
+ //Building our own thunkify function Cool* 
+  
+function thunkify(fn) {
+var args = [].slice.call( arguments, 1 );
+return function(cb) {
+args.push( cb );
+return fn.apply( null, args );
+};
+}
+var fooThunk = thunkify( foo, 3, 4 );
+// later
+fooThunk( function(sum) {
+console.log( sum );
+} )
+
+
+/// 
+
+    var fooThunkory = thunkify( foo );
+    var fooThunk1 = fooThunkory( 3, 4 );
+    var fooThunk2 = fooThunkory( 5, 6 );
+// later
+    fooThunk1( function(sum) {
+    console.log( sum );
+    } ); // 7
+    fooThunk2( function(sum) {
+    console.log( sum );
+    } );
